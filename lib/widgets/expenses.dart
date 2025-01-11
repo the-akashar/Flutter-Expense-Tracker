@@ -22,7 +22,14 @@ final List<Expense> _registeredExpenses = [
 void _openAddExpensesOverlay(){
   showModalBottomSheet(
     context: context,
-    builder: (ctx) => NewExpense()
+    builder: (ctx) => NewExpense(onAddExpense: _addExpense)
+  );
+}
+
+void _addExpense(Expense expense){
+  setState((){
+    _registeredExpenses.add(expense);
+  }
   );
 }
 
