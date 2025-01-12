@@ -37,14 +37,6 @@ class _NewExpenseState extends State<NewExpense> {
       _selectedDate = pickedDate;
     });
   }
-  
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _amountController.dispose();
-    super.dispose();
-  }
 
   void _submitExpenseData(){
     final enteredAmount = double.tryParse(_amountController.text);
@@ -70,7 +62,18 @@ class _NewExpenseState extends State<NewExpense> {
       category: _selectedCategory
     ),
     );
+    Navigator.pop(context);
   }
+  
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +81,8 @@ class _NewExpenseState extends State<NewExpense> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          const TextField(
+           TextField(
+            controller: _titleController,
             maxLength: 50,
             decoration: InputDecoration(
               label: Text('Title'),
@@ -87,7 +91,8 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             children: [
               Expanded(
-                child: const TextField(
+                child:  TextField(
+                      controller: _amountController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         prefixText: '\$',
