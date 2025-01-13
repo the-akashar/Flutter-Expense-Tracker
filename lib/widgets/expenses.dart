@@ -22,6 +22,7 @@ final List<Expense> _registeredExpenses = [
 
 void _openAddExpensesOverlay(){
   showModalBottomSheet(
+    useSafeArea : true ,
     isScrollControlled: true,
     context: context,
     builder: (ctx) => NewExpense(onAddExpense: _addExpense)
@@ -58,6 +59,8 @@ void _removeExpense(Expense expense){
   @override
   Widget build(BuildContext context) {
 
+   final width = MediaQuery.of(context).size.width;
+
     Widget mainContent = const Center(
       child: Text('No expenses found start adding some!!!'),
     );
@@ -77,12 +80,16 @@ void _removeExpense(Expense expense){
           icon: const Icon(Icons.add))
         ],
       ),
-      body: Column(
+      body: width < 600 ? Column(
         children: [
           Chart(expenses:_registeredExpenses),
-          Expanded(child: mainContent)
+          Expanded(child: mainContent),
         ],
-      ),
+      ) 
+      : Row(children:[
+        Expanded(child:Chart(expenses:_registeredExpenses)),
+        Expanded(child: mainContent),
+      ])
     );
   }
   
